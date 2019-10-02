@@ -1,0 +1,121 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Bookstore.Business;
+using Bookstore.DAL;
+using Bookstore.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Bookstore.Controllers
+{
+    [ApiController]
+    [Authorize]
+    [Route("api/[controller]")]
+    public class BooksController : Controller
+    {
+
+        private static BookBusiness _bookBusiness;
+        public BooksController(BookStoreContext context)
+        {
+            _bookBusiness = new BookBusiness(context);
+        }
+
+        // GET: api/<controller>
+        [HttpGet]
+        public ObjectResult Get()
+        {
+            var data = _bookBusiness.Get();
+
+            var result = new ObjectResult(data)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
+
+            return result;
+        }
+
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public ObjectResult Get(int id)
+        {
+            var data = _bookBusiness.Get(id);
+
+            if (data == null) return NotFound("Book Not Found");
+
+            var result = new ObjectResult(data)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
+
+            return result;
+        }
+
+        // POST api/<controller>
+        [HttpPost]
+        public IActionResult Post([FromBody]Book viewModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var id = _bookBusiness.Add(viewModel);
+
+            return CreatedAtAction(nameof(Get), new { Id = id }, viewModel);
+        }
+
+        // PUT api/<controller>
+        [HttpPut]
+        public IActionResult Put([FromBody]Book viewModel)
+        {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var model = _bookBusiness.Update(viewModel);
+
+            if (model == null) return NotFound();
+
+            return CreatedAtAction(nameof(Get), new { Id = model.Id }, model);
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var model = _bookBusiness.Delete(id);
+
+            if (!model) return NotFound();
+
+            return Ok();
+        }
+
+        // GET: api/<controller>
+        [HttpGet("TrendingBooks")]
+        public ObjectResult TrendingBooks()
+        {
+            var data = _bookBusiness.TrendingBooks();
+
+            var result = new ObjectResult(data)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
+
+            return result;
+        }
+
+        // GET: api/<controller>
+        [HttpGet("NewestBooks")]
+        public ObjectResult NewestBooks()
+        {
+            var data = _bookBusiness.NewestBooks();
+
+            var result = new ObjectResult(data)
+            {
+                StatusCode = (int)HttpStatusCode.OK
+            };
+
+            return result;
+        }
+    }
+}

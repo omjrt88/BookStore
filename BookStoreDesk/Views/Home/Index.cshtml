@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "BookStore";
+    if (!ViewBag.isLogged)
+    {
+        @Html.Partial("Login")
+    }
+    else
+    {
+        @Html.Partial("Trending")
+    }
+
+}
+
