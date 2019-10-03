@@ -112,3 +112,4 @@ C:\MyStuff\MyScripts\netCourse\BookStore\BookStoreDesk\obj\Debug\netcoreapp2.2\B
 C:\MyStuff\MyScripts\netCourse\BookStore\BookStoreDesk\obj\Debug\netcoreapp2.2\BookStoreDesk.dll
 C:\MyStuff\MyScripts\netCourse\BookStore\BookStoreDesk\obj\Debug\netcoreapp2.2\BookStoreDesk.pdb
 C:\MyStuff\MyScripts\netCourse\BookStore\BookStoreDesk\obj\Debug\netcoreapp2.2\BookStoreDesk.csproj.CopyComplete
+C:\MyStuff\MyScripts\netCourse\BookStore\BookStoreDesk\obj\Debug\netcoreapp2.2\Razor\Views\Books\Edit.g.cshtml.cs
